@@ -247,4 +247,14 @@ describe('queryOptions', () => {
 
     somethingWithQueryOptions(options)
   })
+
+  it('should infer the queryKey', () => {
+    const key = ['key'] as const
+    const options = queryOptions({
+      queryKey: key,
+      queryFn: () => Promise.resolve(5),
+    })
+
+    expectTypeOf(options.queryKey['0']).toEqualTypeOf<(typeof key)[0]>()
+  })
 })
